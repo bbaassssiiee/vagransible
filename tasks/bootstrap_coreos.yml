@@ -1,0 +1,7 @@
+    - name: "pip install docker-py"
+      pip: name=docker-py
+
+    - name: "service etcd start"
+      service: name=etcd.service state=started
+      sudo: yes
+      sudo_user: root

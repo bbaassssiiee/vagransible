@@ -1,0 +1,26 @@
+- name: bootstrap centos6 hosts
+  hosts: centos6
+  gather_facts: True
+  sudo: yes
+   
+  roles:
+    - bbaassssiiee.commoncentos
+    - geerlingguy.java
+   
+- name: bootstrap coreos hosts
+  hosts: coreos
+  gather_facts: False
+
+  roles:
+    - defunctzombie.coreos-bootstrap
+
+  tasks:
+     include: tasks/bootstrap_coreos.yml
+
+- name: bootstrap ubuntu hosts
+  hosts: ubuntu
+  gather_facts: True
+  sudo: yes
+
+  roles:
+    - geerlingguy.java

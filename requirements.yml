@@ -1,0 +1,13 @@
+---
+# re-use roles from https://galaxy.ansible.com
+# to install:
+# ansible-galaxy install --force -r requirements.yml
+
+- src: defunctzombie.coreos-bootstrap
+  path: roles/
+
+- src: bbaassssiiee.commoncentos
+  path: roles/
+
+- src: geerlingguy.java
+  path: roles/

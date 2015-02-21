@@ -1,0 +1,8 @@
+- name: "install.yml"
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: "ansible-galaxy install --force -r requirements.yml"
+      command: ansible-galaxy install --force -r requirements.yml 
