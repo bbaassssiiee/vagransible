@@ -10,16 +10,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.verbose = "v"
    end  
   
-  # Prefer VMware Fusion before VirtualBox
+  # Prefer VirtualBox before VMware Fusion  
+  config.vm.provider "virtualbox"
+  config.vm.provider "vmware_fusion"
+  
+  config.vm.provider "virtualbox" do |virtualbox|
+    virtualbox.gui = false
+    virtualbox.customize ["modifyvm", :id, "--memory", 2024]
+  end
+  
   config.vm.provider "vmware_fusion" do |vmware|
     vmware.gui = false
     vmware.vmx["memsize"] = "2024"
     vmware.vmx["numvcpus"] = "2"
-  end
-
-  config.vm.provider "virtualbox" do |virtualbox|
-    virtualbox.gui = false
-    virtualbox.customize ["modifyvm", :id, "--memory", 2024]
   end
 
   config.ssh.insert_key = false

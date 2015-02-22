@@ -1,9 +1,13 @@
+
 roles:
 	ansible-playbook -v -i ansible.ini -l local install.yml
 
 clean:
 	vagrant destroy -f
 	rm -rf roles
+	
+test:
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
 centos: roles
 	vagrant up --no-provision centos6
@@ -17,30 +21,14 @@ ubuntu: roles
 	vagrant up --no-provision ubuntu14
 	vagrant provision ubuntu14
 	
-test:
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
-
 all: roles centos ubuntu coreos test
+
 
 
 vagrant-vmware-fusion:
 	vagrant plugin install vagrant-vmware-fusion
 	vagrant plugin license vagrant-vmware-fusion ~/Downloads/license.lic
 
-vb_centos: roles
-	vagrant up --no-provision centos6 --provider virtualbox
-	vagrant provision centos6
-	
-vb_coreos: roles
-	vagrant up --no-provision coreos --provider virtualbox
-	vagrant provision coreos
-
-vb_ubuntu: roles
-	vagrant up --no-provision ubuntu14 --provider virtualbox
-	vagrant provision ubuntu14
-	
-virtualbox: roles vb_centos vb_ubuntu vb_coreos test
-	
 vm_centos: roles
 	vagrant up --no-provision centos6 --provider vmware_fusion
 	vagrant provision centos6
@@ -54,3 +42,6 @@ vm_ubuntu: roles
 	vagrant provision ubuntu14
 	
 vmware: roles vm_centos vm_ubuntu vm_coreos test
+# real	5m0.892s
+virtualbox: roles vb_centos vb_ubuntu vb_coreos test
+# real	5m31.375s
