@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.inventory_path = "ansible.ini"
     ansible.playbook = "provision.yml"
-    ansible.verbose = "v"
+    ansible.verbose = "vv"
    end  
   
   # Prefer VirtualBox before VMware Fusion  
