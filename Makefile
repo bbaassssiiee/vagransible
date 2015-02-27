@@ -20,10 +20,12 @@ coreos: roles
 ubuntu: roles
 	vagrant up --no-provision ubuntu14
 	vagrant provision ubuntu14
-	
-all: roles centos ubuntu coreos test
 
+rancheros: 
+	vagrant up --no-provision rancheros --provider=virtualbox
+	vagrant provision rancheros
 
+all: roles centos ubuntu coreos rancheros test
 
 vagrant-vmware-fusion:
 	vagrant plugin install vagrant-vmware-fusion
