@@ -1,0 +1,4 @@
+    - name: "hello rancheros"
+      command: echo hello
+      sudo: yes
+      sudo_user: root
