@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   config.vm.provider "vmware_fusion" do |vmware|
     vmware.gui = false
-    vmware.vmx["memsize"] = "2024"
+    vmware.vmx["memsize"] = "1024"
     vmware.vmx["numvcpus"] = "2"
   end
 
