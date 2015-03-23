@@ -11,3 +11,8 @@
 
 - src: geerlingguy.java
   path: roles/
+
+- src: https://github.com/MindPointGroup/RHEL6-STIG
+  version: devel
+  path: roles/
+

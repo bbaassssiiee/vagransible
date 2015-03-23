@@ -1,5 +1,5 @@
 
-roles:
+install:
 	ansible-playbook -v -i ansible.ini -l local install.yml
 
 clean:

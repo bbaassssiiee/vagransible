@@ -5,6 +5,7 @@
    
   roles:
     - bbaassssiiee.commoncentos
+    - RHEL6-STIG
     - geerlingguy.java
    
 - name: bootstrap coreos hosts
