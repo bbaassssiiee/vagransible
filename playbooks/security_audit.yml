@@ -1,0 +1,54 @@
+- hosts: centos6
+  gather_facts: False
+  sudo: yes
+
+  vars:
+    - requirements:
+        - tabulate
+        - untangle
+        - pytest
+        - python-coveralls
+        - pytest-cov
+        
+  tasks:
+  - name: 'add packages for security audit'
+    yum: name={{ item }} state=present
+    with_items:
+     - unzip
+     - git
+     - openscap-utils
+     - python-argparse
+     - python-pip
+
+  - name: 'add python modules for security audit'
+    pip: name={{item}}
+    with_items: requirements
+
+  - name: clone the STIGMA tool
+    git: dest=/tmp/STIGMA repo=https://github.com/defionscode/STIGMA clone=yes
+    
+  - name: 'verify absense of STIG_SCAP results.xml file'
+    file: dest=/root/results.xml state=absent
+  
+  - name: 'download Security Content Automation Protocol (SCAP) Content and Tools'
+    get_url: url=http://iase.disa.mil/stigs/Documents/{{stig_benchmark}}
+             dest=/tmp/{{stig_benchmark}}
+
+  - name: 'unzip STIG_SCAP'
+    command: unzip -o /tmp/{{stig_benchmark}}
+  
+  - name: 'run the SCAP tool'
+    command: "oscap xccdf eval \
+      --profile MAC-1_Public \
+      --results /root/results.xml \
+      --cpe U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
+      U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
+#    no_log: yes
+    ignore_errors: yes
+
+  - name: 'Compare audit results to the STIG benchmark thresholds'
+    command: python /tmp/STIGMA/src/stigma.py -H 90 -M 90 -L 90 -P /root/results.xml
+#   -T Integer representing acceptable pass percentage of all benchmarks Combined
+#   -H Integer representing acceptable pass percentage of High Severity Benchmarks
+#   -M Integer representing acceptable pass percentage of Medium Severity Benchmarks
+#   -L Integer representing acceptable pass percentage of Low Severity Benchmarks

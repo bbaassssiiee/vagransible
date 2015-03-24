@@ -2,7 +2,9 @@
 java_packages:
   - java-1.7.0-openjdk
 
+# FOR THE RHEL_STIG security compliance
 rhel6stig_cat1: true
 rhel6stig_cat2: true
 rhel6stig_cat3: true
 rhel6stig_fullauto: true
+stig_benchmark: 'U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip'

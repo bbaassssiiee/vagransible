@@ -9,15 +9,18 @@ clean:
 test:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
-centos: roles
+centos: install
 	vagrant up --no-provision centos6
 	vagrant provision centos6
 	
-coreos: roles
+stig: 
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
+
+coreos: install
 	vagrant up --no-provision coreos
 	vagrant provision coreos
 
-ubuntu: roles
+ubuntu: install
 	vagrant up --no-provision ubuntu14
 	vagrant provision ubuntu14
 
