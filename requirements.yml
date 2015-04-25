@@ -6,7 +6,7 @@
 - src: defunctzombie.coreos-bootstrap
   path: roles/
 
-- src: bbaassssiiee.commoncentos
+- src: https://github.com/bbaassssiiee/commoncentos
   path: roles/
 
 - src: geerlingguy.java
