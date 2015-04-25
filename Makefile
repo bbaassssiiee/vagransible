@@ -17,6 +17,8 @@ stig:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml RHEL-STIG2.yml
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 
+stigtest:
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 coreos: install
 	vagrant up --no-provision coreos
 	vagrant provision coreos
