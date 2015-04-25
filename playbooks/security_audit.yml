@@ -41,10 +41,14 @@
     command: "oscap xccdf eval \
       --profile MAC-1_Public \
       --results /root/results.xml \
+      --report rhel-stig-report.html \
       --cpe U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
       U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
 #    no_log: yes
     ignore_errors: yes
+
+  - name: 'fetch rhel-stig-report.html'
+    fetch: dest=/tmp/rhel-stig-report.html src=rhel-stig-report.html flat=yes
 
   - name: 'Compare audit results to the STIG benchmark thresholds'
     command: python /tmp/STIGMA/src/stigma.py -H 100 -M 95 -L 90 -P /root/results.xml
