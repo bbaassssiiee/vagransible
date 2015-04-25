@@ -54,7 +54,7 @@
     fetch: dest=/tmp/rhel-stig-report.html src=/root/rhel-stig-report.html flat=yes
 
   - name: 'Compare audit results to the STIG benchmark thresholds'
-    command: python /tmp/STIGMA/src/stigma.py -H 100 -M 95 -L 90 -P /root/results.xml
+    command: python /tmp/STIGMA/src/stigma.py -H 100 -M 95 -L 92 -P /root/results.xml
 #   -T Integer representing acceptable pass percentage of all benchmarks Combined
 #   -H Integer representing acceptable pass percentage of High Severity Benchmarks
 #   -M Integer representing acceptable pass percentage of Medium Severity Benchmarks

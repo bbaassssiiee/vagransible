@@ -4,7 +4,6 @@ install:
 
 clean:
 	vagrant destroy -f
-	rm -rf roles
 	
 test:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
@@ -17,8 +16,17 @@ stig:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml RHEL-STIG2.yml
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 
+stig1: 
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml
+
+stig2:
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG2.yml
+
 stigtest:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
+
+stig: stig1 stig2 stigtest
+
 coreos: install
 	vagrant up --no-provision coreos
 	vagrant provision coreos
