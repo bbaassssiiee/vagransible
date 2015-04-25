@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   config.vm.provider "virtualbox" do |virtualbox|
     virtualbox.gui = false
-    virtualbox.customize ["modifyvm", :id, "--memory", 2024]
+    virtualbox.customize ["modifyvm", :id, "--memory", 2048]
   end
   
   config.vm.provider "vmware_fusion" do |vmware|
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos6_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2201, auto_correct: true
     
     centos6_config.vm.provider "vmware_fusion" do |vmware|
-      vmware.vmx["memsize"] = "2024"
+      vmware.vmx["memsize"] = "2048"
       vmware.vmx["numvcpus"] = "2"
     end
     centos6_config.vm.provider "virtualbox" do |vb|
@@ -50,7 +50,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ubuntu14_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2202, auto_correct: true
     
     ubuntu14_config.vm.provider "vmware_fusion" do |vmware|
-      vmware.vmx["memsize"] = "2024"
+      vmware.vmx["memsize"] = "2048"
       vmware.vmx["numvcpus"] = "2"
     end
     ubuntu14_config.vm.provider "virtualbox" do |virtualbox|
