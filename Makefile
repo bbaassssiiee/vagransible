@@ -9,11 +9,12 @@ clean:
 test:
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
-centos: install
+centos:
 	vagrant up --no-provision centos6
 	vagrant provision centos6
 	
 stig: 
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml RHEL-STIG2.yml
 	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 
 coreos: install
