@@ -24,31 +24,34 @@
     pip: name={{item}}
     with_items: requirements
 
-  - name: clone the STIGMA tool
+  - name: 'clone the STIGMA tool'
     git: dest=/tmp/STIGMA repo=https://github.com/defionscode/STIGMA clone=yes
     
-  - name: 'verify absense of STIG_SCAP results.xml file'
+  - name: 'ensure absense of STIG_SCAP results.xml file'
     file: dest=/root/results.xml state=absent
   
-  - name: 'download Security Content Automation Protocol (SCAP) Content and Tools'
+  - name: 'ensure absense of STIG_SCAP rhel-stig-report.html file'
+    file: dest=/root/rhel-stig-report.html state=absent
+
+  - name: 'download from http://iase.disa.mil/stigs/Documents'
     get_url: url=http://iase.disa.mil/stigs/Documents/{{stig_benchmark}}
              dest=/tmp/{{stig_benchmark}}
 
-  - name: 'unzip STIG_SCAP'
+  - name: 'unzip Security Content Automation Protocol (SCAP) Content and Tools'
     command: unzip -o /tmp/{{stig_benchmark}}
   
-  - name: 'run the SCAP tool'
+  - name: 'run the SCAP tool and create rhel-stig-report.html'
     command: "oscap xccdf eval \
       --profile MAC-1_Public \
       --results /root/results.xml \
-      --report rhel-stig-report.html \
+      --report /root/rhel-stig-report.html \
       --cpe U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
       U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
-#    no_log: yes
+    no_log: yes
     ignore_errors: yes
 
-  - name: 'fetch rhel-stig-report.html'
-    fetch: dest=/tmp/rhel-stig-report.html src=rhel-stig-report.html flat=yes
+  - name: 'fetch report into /tmp/rhel-stig-report.html'
+    fetch: dest=/tmp/rhel-stig-report.html src=/root/rhel-stig-report.html flat=yes
 
   - name: 'Compare audit results to the STIG benchmark thresholds'
     command: python /tmp/STIGMA/src/stigma.py -H 100 -M 95 -L 90 -P /root/results.xml
