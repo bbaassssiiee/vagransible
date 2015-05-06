@@ -3,12 +3,13 @@
   sudo: yes
 
   handlers:
+
     - name: 'restart docker'
       service: name=docker state=restarted
 
   tasks:
     
-    - name: 'ensure packages are installed'
+    - name: 'yum: ensure packages are installed'
       yum: name={{ item }} state=installed
       with_items:
         - wget
@@ -19,21 +20,19 @@
         - make
         - docker
 
-    - name: 'ensure all packages are up2date'
-      command: yum -y update
-
-    - name: 'ensure the dockerroot group is present'
+    - name: 'group: ensure the dockerroot is present'
       group: name=dockerroot gid=991 state=present system=yes
 
-    - name: 'ensure vagrant is member of dockerroot group'
+    - name: 'user: ensure vagrant is member of dockerroot group'
       user: name=vagrant groups=dockerroot append=yes
 
-    - name: 'enable service docker'
+    - name: 'service: enable docker'
       sudo: yes
       service: name=docker enabled=true
 
     - name: 'configure /etc/sysconfig/docker'
       lineinfile: state=present backup=no dest=/etc/sysconfig/docker regexp='^OPTIONS' line="OPTIONS='--selinux-enabled --group=dockerroot'"
+
+    - name: 'shell: yum update'
+      shell: yum -y update
       notify: restart docker
-
-
