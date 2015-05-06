@@ -1,11 +1,8 @@
-- hosts: all
+- hosts: fedora21
   gather_facts: False
   sudo: yes
 
   handlers:
-    - name: 'reboot'
-      command: reboot
-
     - name: 'restart docker'
       service: name=docker state=restarted
 
