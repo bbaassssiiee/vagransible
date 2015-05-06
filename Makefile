@@ -27,6 +27,13 @@ stigtest:
 
 stig: stig1 stig2 stigtest
 
+fedora21:
+	vagrant up --no-provision fedora21
+	vagrant provision fedora21
+
+docker: fedora21
+	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l fedora21 playbooks/install_docker.yml
+
 coreos: install
 	vagrant up --no-provision coreos
 	vagrant provision coreos
@@ -39,7 +46,7 @@ rancheros:
 	vagrant up --no-provision rancheros --provider=virtualbox
 	vagrant provision rancheros
 
-all: roles centos ubuntu coreos rancheros test
+all: roles centos fedora21 ubuntu coreos rancheros test
 
 vagrant-vmware-fusion:
 	vagrant plugin install vagrant-vmware-fusion

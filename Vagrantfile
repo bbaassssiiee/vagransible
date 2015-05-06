@@ -44,6 +44,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.vm.define :fedora21, autostart: true do |fedora21_config|
+    fedora21_config.vm.box = "chef/fedora-21"  # to delete: 'vagrant destroy; box remove chef/fedora-21'
+    fedora21_config.vm.box_url = "https://atlas.hashicorp.com/chef/boxes/fedora-21"
+    fedora21_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2204, auto_correct: true
+    
+    fedora21_config.vm.provider "vmware_fusion" do |vmware|
+      vmware.vmx["memsize"] = "2048"
+      vmware.vmx["numvcpus"] = "2"
+    end
+    fedora21_config.vm.provider "virtualbox" do |vb|
+      vb.name = "fedora21"
+    end
+  end
+
   config.vm.define :ubuntu14, autostart: true do |ubuntu14_config|
     ubuntu14_config.vm.box = "chef/ubuntu-14.04"  # to delete: 'vagrant destroy; box remove chef/ubuntu-14.04'
     ubuntu14_config.vm.box_url = "https://atlas.hashicorp.com/chef/boxes/ubuntu-14.04"

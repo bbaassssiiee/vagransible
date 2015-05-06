@@ -6,6 +6,14 @@
   roles:
     - commoncentos
     - geerlingguy.java
+
+- name: bootstrap fedora hosts
+  hosts: fedora21
+  gather_facts: True
+  sudo: yes
+
+  tasks:
+     include: tasks/install_docker.yml
    
 - name: bootstrap coreos hosts
   hosts: coreos

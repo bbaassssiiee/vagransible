@@ -1,0 +1,42 @@
+- hosts: all
+  gather_facts: False
+  sudo: yes
+
+  handlers:
+    - name: 'reboot'
+      command: reboot
+
+    - name: 'restart docker'
+      service: name=docker state=restarted
+
+  tasks:
+    
+    - name: 'ensure packages are installed'
+      yum: name={{ item }} state=installed
+      with_items:
+        - wget
+        - git
+        - ansible
+        - curl
+        - unzip
+        - make
+        - docker
+
+    - name: 'ensure all packages are up2date'
+      command: yum -y update
+
+    - name: 'ensure the dockerroot group is present'
+      group: name=dockerroot gid=991 state=present system=yes
+
+    - name: 'ensure vagrant is member of dockerroot group'
+      user: name=vagrant groups=dockerroot append=yes
+
+    - name: 'enable service docker'
+      sudo: yes
+      service: name=docker enabled=true
+
+    - name: 'configure /etc/sysconfig/docker'
+      lineinfile: state=present backup=no dest=/etc/sysconfig/docker regexp='^OPTIONS' line="OPTIONS='--selinux-enabled --group=dockerroot'"
+      notify: restart docker
+
+
