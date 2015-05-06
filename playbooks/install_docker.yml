@@ -33,6 +33,12 @@
     - name: 'configure /etc/sysconfig/docker'
       lineinfile: state=present backup=no dest=/etc/sysconfig/docker regexp='^OPTIONS' line="OPTIONS='--selinux-enabled --group=dockerroot'"
 
+    - name: 'start docker'
+      service: name=docker state=started
+
+    - name: 'authorize vagrant for docker'
+      file: dest=/var/run/docker.sock group=dockerroot
+
     - name: 'shell: yum update'
       shell: yum -y update
       notify: restart docker
