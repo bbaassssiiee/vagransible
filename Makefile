@@ -1,3 +1,4 @@
+VAGRANT_DEFAULT_PROVIDER=virtualbox
 
 install:
 	ansible-playbook -v -i ansible.ini -l local install.yml
