@@ -69,3 +69,6 @@ vmware: roles vm_centos vm_ubuntu vm_coreos test
 # real	5m0.892s
 virtualbox: roles vb_centos vb_ubuntu vb_coreos test
 # real	5m31.375s
+
+demo:	install centos stig
+	open /tmp/rhel-stig-report.html
