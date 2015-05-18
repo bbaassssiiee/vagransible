@@ -6,7 +6,13 @@ Vagransible is a demo presented by Bas Meijer in the Ansible-Benelux Meetup.
 
 <http://www.meetup.com/Ansible-Benelux/>
 
-NOTE: This demo was made on a Mac.
+NOTE: This demo was made on a Mac where I have this in ~/.ansible.cfg
+
+    [defaults]
+    private_key_file=/Users/bassie/.ssh/vagrant.rsa
+    host_key_checking=False
+    ansible_managed = Ansible managed: %Y-%m-%d %H:%M:%S by {uid}
+
 ___
 Vagrant allows users to create disposable virtual machines for their projects. These machines can be provisioned by Ansible. Combining both tools yields full control over development environments.
 ___
