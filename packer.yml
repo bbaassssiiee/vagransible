@@ -9,4 +9,3 @@
 
   roles:
     - bbaassssiiee.commoncentos
-    - { role: RHEL6-STIG, rhel6stig_cat2: true, rhel6stig_cat3: true, rhel6stig_is_mail_relay: true }
