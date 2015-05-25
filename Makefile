@@ -7,33 +7,25 @@ clean:
 	vagrant destroy -f
 	
 test:
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
 centos:
 	vagrant up --no-provision centos6
 	vagrant provision centos6
 	
 stig: 
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml RHEL-STIG2.yml
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/RHEL-STIG1.yml
 
-stig1: 
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG1.yml
-
-stig2:
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 RHEL-STIG2.yml
-
-stigtest:
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
-
-stig: stig1 stig2 stigtest
+audit:
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
+	open /tmp/rhel-stig-report.html
 
 fedora21:
 	vagrant up --no-provision fedora21
 	vagrant provision fedora21
 
 docker: fedora21
-	ansible-playbook --private-key=vagrant.rsa -i ansible.ini -l fedora21 playbooks/install_docker.yml
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l fedora21 playbooks/install_docker.yml
 
 coreos: install
 	vagrant up --no-provision coreos
@@ -70,5 +62,5 @@ vmware: roles vm_centos vm_ubuntu vm_coreos test
 virtualbox: roles vb_centos vb_ubuntu vb_coreos test
 # real	5m31.375s
 
-demo:	install centos stig
-	open /tmp/rhel-stig-report.html
+demo:	install centos stig audit
+	

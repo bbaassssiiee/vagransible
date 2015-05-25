@@ -31,8 +31,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
 
   config.vm.define :centos6, autostart: true do |centos6_config|
-    centos6_config.vm.box = "chef/centos-6.6"  # to delete: 'vagrant destroy; box remove chef/centos-6.6'
-    centos6_config.vm.box_url = "https://atlas.hashicorp.com/chef/boxes/centos-6.6"
+    centos6_config.vm.box = "dockpack/centos6"  # to delete: 'vagrant destroy; box remove chef/centos-6.6'
+    centos6_config.vm.box_url = "https://atlas.hashicorp.com/dockpack/boxes/centos6"
     centos6_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2201, auto_correct: true
     
     centos6_config.vm.provider "vmware_fusion" do |vmware|
