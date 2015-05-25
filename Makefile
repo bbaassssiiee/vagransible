@@ -1,7 +1,12 @@
 VAGRANT_DEFAULT_PROVIDER=virtualbox
+DOWNLOADS=/tmp/
 
 install:
 	ansible-playbook -v -i ansible.ini -l local install.yml
+
+	@wget --limit-rate=10m --tries=10 --retry-connrefused --waitretry=180 --directory-prefix=${DOWNLOADS} --no-clobber \
+	http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.6-x86_64-netinstall.iso \
+	|| mv ${DOWNLOADS}/CentOS-6.6-x86_64-netinstall.iso ${DOWNLOADS} || true
 
 clean:
 	vagrant destroy -f
@@ -40,10 +45,6 @@ rancheros:
 	vagrant provision rancheros
 
 all: roles centos fedora21 ubuntu coreos rancheros test
-
-vagrant-vmware-fusion:
-	vagrant plugin install vagrant-vmware-fusion
-	vagrant plugin license vagrant-vmware-fusion ~/Downloads/license.lic
 
 vm_centos: roles
 	vagrant up --no-provision centos6 --provider vmware_fusion

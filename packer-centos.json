@@ -1,0 +1,77 @@
+{
+  "push": {
+    "name": "my_centos6"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "override": {
+        "virtualbox-iso": {
+          "scripts": [
+            "scripts/virtualbox.sh",
+            "scripts/ansible.sh"
+          ]
+        }
+      }
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "packer.yml",
+      "role_paths": [
+        "roles/bbaassssiiee.commoncentos",
+        "roles/RHEL6-STIG"
+      ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/cleanup.sh"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "guest_os_type": "RedHat_64",
+      "headless": false,
+      "http_directory": "kickstart",
+      "iso_urls": [
+        "file:///tmp/CentOS-6.6-x86_64-netinstall.iso",
+        "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.6-x86_64-netinstall.iso"
+      ],
+      "iso_checksum_type": "md5",
+      "iso_checksum": "2342bc5ea72fc028972aa0f21cee28b4",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -h 0",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "my_centos6",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "output": "packer/{{.Provider}}-my_centos6.box"
+    }
+  ]
+}
+

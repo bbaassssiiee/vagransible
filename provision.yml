@@ -1,3 +1,5 @@
+---
+# This playbook is run as a provisioner for vagrant virtual machines
 - name: bootstrap centos6 hosts
   hosts: centos6
   gather_facts: True

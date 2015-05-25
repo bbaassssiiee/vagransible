@@ -18,12 +18,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     virtualbox.gui = false
     virtualbox.customize ["modifyvm", :id, "--memory", 2048]
   end
-  
-  config.vm.provider "vmware_fusion" do |vmware|
-    vmware.gui = false
-    vmware.vmx["memsize"] = "1024"
-    vmware.vmx["numvcpus"] = "2"
-  end
 
   config.ssh.insert_key = false
   config.vm.box_check_update = false
@@ -34,11 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos6_config.vm.box = "dockpack/centos6"  # to delete: 'vagrant destroy; box remove chef/centos-6.6'
     centos6_config.vm.box_url = "https://atlas.hashicorp.com/dockpack/boxes/centos6"
     centos6_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2201, auto_correct: true
-    
-    centos6_config.vm.provider "vmware_fusion" do |vmware|
-      vmware.vmx["memsize"] = "2048"
-      vmware.vmx["numvcpus"] = "2"
-    end
+
     centos6_config.vm.provider "virtualbox" do |vb|
       vb.name = "centos6"
     end
@@ -49,10 +39,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fedora21_config.vm.box_url = "https://atlas.hashicorp.com/chef/boxes/fedora-21"
     fedora21_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2204, auto_correct: true
     
-    fedora21_config.vm.provider "vmware_fusion" do |vmware|
-      vmware.vmx["memsize"] = "2048"
-      vmware.vmx["numvcpus"] = "2"
-    end
     fedora21_config.vm.provider "virtualbox" do |vb|
       vb.name = "fedora21"
     end
@@ -63,10 +49,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ubuntu14_config.vm.box_url = "https://atlas.hashicorp.com/chef/boxes/ubuntu-14.04"
     ubuntu14_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2202, auto_correct: true
     
-    ubuntu14_config.vm.provider "vmware_fusion" do |vmware|
-      vmware.vmx["memsize"] = "2048"
-      vmware.vmx["numvcpus"] = "2"
-    end
     ubuntu14_config.vm.provider "virtualbox" do |virtualbox|
       virtualbox.name = "ubuntu14"
     end

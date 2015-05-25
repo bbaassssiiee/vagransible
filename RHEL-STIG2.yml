@@ -1,8 +1,0 @@
----
-- name: 'prepare STIG on centos6 box'
-  hosts: centos6
-  gather_facts: True
-  sudo: yes
-
-  roles:
-    - RHEL6-STIG
