@@ -1,6 +1,6 @@
 {
   "push": {
-    "name": "my_centos6"
+    "name": "centos6"
   },
   "provisioners": [
     {
@@ -48,7 +48,7 @@
       "ssh_password": "vagrant",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "my_centos6",
+      "vm_name": "centos6",
       "vboxmanage": [
         [
           "modifyvm",
@@ -69,7 +69,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "packer/{{.Provider}}-my_centos6.box"
+      "output": "packer/{{.Provider}}-centos6.box"
     }
   ]
 }
