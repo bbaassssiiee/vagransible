@@ -6,8 +6,8 @@
   sudo: yes
    
   roles:
-    - commoncentos
     - geerlingguy.java
+    - RHEL6-STIG
 
 - name: bootstrap fedora hosts
   hosts: fedora21

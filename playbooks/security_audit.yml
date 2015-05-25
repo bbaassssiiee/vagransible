@@ -23,9 +23,6 @@
   - name: 'add python modules for security audit'
     pip: name={{item}}
     with_items: requirements
-
-  - name: 'clone the STIGMA tool'
-    git: dest=/tmp/STIGMA repo=https://github.com/defionscode/STIGMA clone=yes
     
   - name: 'ensure absense of STIG_SCAP results.xml file'
     file: dest=/root/results.xml state=absent
@@ -42,7 +39,7 @@
   
   - name: 'run the SCAP tool and create rhel-stig-report.html'
     command: "oscap xccdf eval \
-      --profile MAC-1_Public \
+      --profile MAC-3_Classified \
       --results /root/results.xml \
       --report /root/rhel-stig-report.html \
       --cpe U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
@@ -53,9 +50,19 @@
   - name: 'fetch report into /tmp/rhel-stig-report.html'
     fetch: dest=/tmp/rhel-stig-report.html src=/root/rhel-stig-report.html flat=yes
 
-  - name: 'Compare audit results to the STIG benchmark thresholds'
-    command: python /tmp/STIGMA/src/stigma.py -H 100 -M 95 -L 92 -P /root/results.xml
-#   -T Integer representing acceptable pass percentage of all benchmarks Combined
-#   -H Integer representing acceptable pass percentage of High Severity Benchmarks
-#   -M Integer representing acceptable pass percentage of Medium Severity Benchmarks
-#   -L Integer representing acceptable pass percentage of Low Severity Benchmarks
+  - name: 'download Red Hat Security Response Team OVAL definitions, part 1'
+    get_url: url=http://www.redhat.com/security/data/metrics/com.redhat.rhsa-all.xccdf.xml
+             dest=/tmp/com.redhat.rhsa-all.xccdf.xml
+
+  - name: 'download Red Hat Security Response Team OVAL definitions, part 2'
+    get_url: url=http://www.redhat.com/security/data/oval/com.redhat.rhsa-all.xml
+             dest=/tmp/com.redhat.rhsa-all.xml
+
+  - name: 'run the SCAP tool and create vulnerability-report.html'
+    command: "oscap xccdf eval --results /root/results.xml \
+      --report /root/vulnerability-report.html \
+      /tmp/com.redhat.rhsa-all.xccdf.xml"
+
+
+  - name: 'fetch report into /tmp/vulnerability-report.html'
+    fetch: dest=/tmp/vulnerability-report.html src=/root/vulnerability-report.html flat=yes

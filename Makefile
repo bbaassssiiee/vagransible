@@ -11,8 +11,6 @@ install:
 clean:
 	vagrant destroy -f
 	
-test:
-	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
 centos:
 	vagrant up --no-provision centos6
@@ -24,6 +22,22 @@ stig:
 audit:
 	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 	open /tmp/rhel-stig-report.html
+	open /tmp/vulnerability-report.html
+
+packer/virtualbox-centos6.box:
+	packer build packer-centos.json
+
+test:
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
+
+box: packer/virtualbox-centos6.box
+	vagrant box add --name=dockpack/centos6 packer/virtualbox-centos6.box
+	vagrant up --no-provision centos6
+	vagrant provision centos6
+
+all: install box stig audit
+
+demo:	install centos stig audit
 
 fedora21:
 	vagrant up --no-provision fedora21
@@ -44,8 +58,6 @@ rancheros:
 	vagrant up --no-provision rancheros --provider=virtualbox
 	vagrant provision rancheros
 
-all: roles centos fedora21 ubuntu coreos rancheros test
-
 vm_centos: roles
 	vagrant up --no-provision centos6 --provider vmware_fusion
 	vagrant provision centos6
@@ -57,11 +69,6 @@ vm_coreos: roles
 vm_ubuntu: roles
 	vagrant up --no-provision ubuntu14 --provider vmware_fusion
 	vagrant provision ubuntu14
-	
-vmware: roles vm_centos vm_ubuntu vm_coreos test
-# real	5m0.892s
-virtualbox: roles vb_centos vb_ubuntu vb_coreos test
-# real	5m31.375s
 
-demo:	install centos stig audit
+
 	
