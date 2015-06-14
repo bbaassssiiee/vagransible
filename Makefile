@@ -19,6 +19,9 @@ centos:
 stig: 
 	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/RHEL-STIG1.yml
 
+cis: 
+	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/CIS.yml
+
 audit:
 	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l centos6 playbooks/security_audit.yml
 	open /tmp/rhel-stig-report.html
