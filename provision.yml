@@ -7,9 +7,9 @@
 
   roles:
     - geerlingguy.java
-    - issue
     - loghost
     - RHEL6-STIG
+    - issue
 
 - name: bootstrap centos7 hosts
   hosts: centos7
