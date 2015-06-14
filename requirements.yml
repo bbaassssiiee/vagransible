@@ -16,3 +16,5 @@
   version: devel
   path: ./roles/
 
+- src: https://github.com/major/ansible-role-cis
+  path: ./roles/
