@@ -5,4 +5,10 @@
 
   tasks:
     - name: "ansible-galaxy install --force -r requirements.yml"
-      command: ansible-galaxy install --force -r requirements.yml 
+      command: ansible-galaxy install --force -r requirements.yml
+
+    - name: 'ensure permissions on directory for certificates'
+      file: name=pki state=directory mode=0700
+
+    - name: 'ensure permissions on insecure_private_key for SSH'
+      file: name=pki/vagrant.rsa state=file mode=0600

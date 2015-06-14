@@ -5,7 +5,7 @@
   sudo: yes
 
   pre_tasks:
-    - include: ../roles/commoncentos/tasks/stig.yml
+    - include: ../roles/bbaassssiiee.commoncentos/tasks/stig.yml
 
   roles:
     - ../roles/RHEL6-STIG
