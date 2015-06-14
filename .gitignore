@@ -5,7 +5,7 @@
 pki
 
 # Re-use Galaxy roles: use ansible/requirements.yml
-ansible/roles
+roles
 
 # Packer builds
 output-virtualbox-iso
