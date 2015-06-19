@@ -4,13 +4,13 @@ DOWNLOADS=/tmp/
 install:
 	ansible-playbook -v -i ansible.ini -l local install.yml
 
-	@wget --limit-rate=10m --tries=10 --retry-connrefused --waitretry=180 --directory-prefix=${DOWNLOADS} --no-clobber \
-	http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.6-x86_64-netinstall.iso \
-	|| mv ${DOWNLOADS}/CentOS-6.6-x86_64-netinstall.iso ${DOWNLOADS} || true
-
 clean:
 	vagrant destroy -f
 	
+download:
+	@wget --limit-rate=10m --tries=10 --retry-connrefused --waitretry=180 --directory-prefix=${DOWNLOADS} --no-clobber \
+	http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.6-x86_64-netinstall.iso \
+	|| mv ${DOWNLOADS}/CentOS-6.6-x86_64-netinstall.iso ${DOWNLOADS} || true
 
 centos:
 	vagrant up --no-provision centos6
@@ -38,9 +38,9 @@ box: packer/virtualbox-centos6.box
 	vagrant up --no-provision centos6
 	vagrant provision centos6
 
-all: install box stig audit
+all: install download box stig audit
 
-demo:	install centos stig audit
+demo: install centos stig audit
 
 fedora21:
 	vagrant up --no-provision fedora21
