@@ -8,16 +8,7 @@
   roles:
     - geerlingguy.java
     - loghost
-    - RHEL6-STIG
     - issue
-
-- name: bootstrap centos7 hosts
-  hosts: centos7
-  gather_facts: True
-  sudo: yes
-
-  roles:
-    - geerlingguy.java
 
 - name: bootstrap fedora hosts
   hosts: fedora21
