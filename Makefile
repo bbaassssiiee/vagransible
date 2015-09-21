@@ -34,7 +34,7 @@ test:
 	ansible-playbook --private-key=pki/vagrant.rsa -i ansible.ini -l all playbooks/test_java.yml
 
 box: packer/virtualbox-centos6.box
-	vagrant box add --name=dockpack/centos6 packer/virtualbox-centos6.box
+	vagrant box add --name=centos6 packer/virtualbox-centos6.box
 	vagrant up --no-provision centos6
 	vagrant provision centos6
 
