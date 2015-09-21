@@ -40,10 +40,10 @@
       "http_directory": "kickstart",
       "iso_urls": [
         "file:///tmp/CentOS-6.6-x86_64-netinstall.iso",
-        "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.6-x86_64-netinstall.iso"
+        "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.7-x86_64-netinstall.iso"
       ],
       "iso_checksum_type": "md5",
-      "iso_checksum": "2342bc5ea72fc028972aa0f21cee28b4",
+      "iso_checksum": "171ce654ec06040d096daf75934ca8ca",
       "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -h 0",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
