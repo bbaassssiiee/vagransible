@@ -1,16 +1,9 @@
 ---
 - name: 'prepare STIG on centos6 box'
-  hosts: centos6
+  hosts: all
   gather_facts: True
-  sudo: yes
-
-  pre_tasks:
-    - include: ../roles/bbaassssiiee.commoncentos/tasks/stig.yml
+  become: yes
 
   roles:
     - ../roles/RHEL6-STIG
 
-
-  handlers:
-    - name: 'restart iptables'
-      service: name=iptables state=restarted
