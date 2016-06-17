@@ -5,7 +5,7 @@
 
   tasks:
     - name: "ansible-galaxy install --force -r requirements.yml"
-      command: ansible-galaxy install --force -r requirements.yml
+      command: ansible-galaxy install --force -p roles -r requirements.yml
 
     - name: 'ensure permissions on directory for certificates'
       file: name=pki state=directory mode=0700

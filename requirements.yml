@@ -4,17 +4,12 @@
 # ansible-galaxy install --force -r requirements.yml
 
 - src: defunctzombie.coreos-bootstrap
-  path: roles/
 
 - src: bbaassssiiee.commoncentos
-  path: roles/
 
 - src: geerlingguy.java
-  path: roles/
 
 - src: https://github.com/MindPointGroup/RHEL6-STIG.git
   version: devel
-  path: ./roles/
 
 - src: https://github.com/major/ansible-role-cis
-  path: ./roles/
