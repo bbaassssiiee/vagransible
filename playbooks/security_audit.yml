@@ -1,6 +1,6 @@
 - hosts: all
   gather_facts: False
-  sudo: yes
+  become: yes
 
   vars:
     - requirements:

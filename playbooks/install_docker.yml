@@ -1,6 +1,6 @@
 - hosts: fedora21
   gather_facts: False
-  sudo: yes
+  become: yes
 
   handlers:
 
@@ -27,7 +27,7 @@
       user: name=vagrant groups=dockerroot append=yes
 
     - name: 'service: enable docker'
-      sudo: yes
+      become: yes
       service: name=docker enabled=true
 
     - name: 'configure /etc/sysconfig/docker'

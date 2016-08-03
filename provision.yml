@@ -3,43 +3,7 @@
 - name: bootstrap centos6 hosts
   hosts: centos6
   gather_facts: True
-  sudo: yes
+  become: yes
 
   roles:
-    - geerlingguy.java
-    - loghost
-    - issue
-
-- name: bootstrap fedora hosts
-  hosts: fedora21
-  gather_facts: True
-  sudo: yes
-
-  tasks:
-     include: tasks/install_docker.yml
-
-- name: bootstrap coreos hosts
-  hosts: coreos
-  gather_facts: False
-
-  roles:
-    - defunctzombie.coreos-bootstrap
-
-  tasks:
-     include: tasks/bootstrap_coreos.yml
-
-- name: bootstrap ubuntu hosts
-  hosts: ubuntu
-  gather_facts: True
-  sudo: yes
-
-  roles:
-    - geerlingguy.java
-
-- name: bootstrap rancheros hosts
-  hosts: rancheros
-  gather_facts: False
-  sudo: yes
-
-  tasks:
-     include: tasks/bootstrap_rancheros.yml
+    - RHEL6-STIG

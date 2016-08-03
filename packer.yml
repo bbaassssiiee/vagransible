@@ -2,7 +2,7 @@
 # This playbook is run from packer during kickstart (phase 1)
 - hosts: 127.0.0.1
   user: vagrant
-  sudo: yes
+  become: yes
 
   pre_tasks:
     - include: roles/bbaassssiiee.commoncentos/tasks/stig.yml

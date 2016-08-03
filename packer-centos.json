@@ -39,7 +39,7 @@
       "headless": false,
       "http_directory": "kickstart",
       "iso_urls": [
-        "file:///tmp/CentOS-6.6-x86_64-netinstall.iso",
+        "file:///tmp/CentOS-6.7-x86_64-netinstall.iso",
         "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.7-x86_64-netinstall.iso"
       ],
       "iso_checksum_type": "md5",
