@@ -39,14 +39,15 @@
       "headless": false,
       "http_directory": "kickstart",
       "iso_urls": [
-        "file:///tmp/CentOS-6.7-x86_64-netinstall.iso",
-        "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.7-x86_64-netinstall.iso"
+        "file:///tmp/CentOS-6.9-x86_64-netinstall.iso",
+        "http://www.mirrorservice.org/sites/mirror.centos.org/6/isos/x86_64/CentOS-6.9-x86_64-minimal.iso"
       ],
       "iso_checksum_type": "md5",
-      "iso_checksum": "171ce654ec06040d096daf75934ca8ca",
+      "iso_checksum": "af4a1640c0c6f348c6c41f1ea9e192a2",
       "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -h 0",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
+      "ssh_wait_timeout": "10000s",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "centos6",

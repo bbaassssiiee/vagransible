@@ -6,4 +6,5 @@
   become: yes
 
   roles:
+    - bbaassssiiee.commoncentos
     - RHEL6-STIG

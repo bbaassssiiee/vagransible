@@ -3,13 +3,13 @@
 # to install:
 # ansible-galaxy install --force -r requirements.yml
 
-- src: defunctzombie.coreos-bootstrap
+#- src: defunctzombie.coreos-bootstrap
 
-- src: bbaassssiiee.commoncentos
+#- src: bbaassssiiee.commoncentos
 
-- src: geerlingguy.java
+#- src: geerlingguy.java
 
 - src: https://github.com/MindPointGroup/RHEL6-STIG.git
   version: devel
 
-- src: https://github.com/major/ansible-role-cis
+#- src: https://github.com/major/ansible-role-cis

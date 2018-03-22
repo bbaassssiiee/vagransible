@@ -31,38 +31,49 @@
     file: dest=/root/rhel-stig-report.html state=absent
 
   - name: 'download from http://iase.disa.mil/stigs/Documents'
-    get_url: url=http://iase.disa.mil/stigs/Documents/{{stig_benchmark}}
-             dest=training/{{stig_benchmark}}
+    get_url: "url=http://iase.disa.mil/stigs/Documents/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip
+             dest=/tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip"
 
   - name: 'unzip Security Content Automation Protocol (SCAP) Content and Tools'
-    command: unzip -o training/{{stig_benchmark}}
+    command: unzip -o /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip
+    args:
+      chdir: /tmp
 
   - name: 'run the SCAP tool and create rhel-stig-report.html'
     command: "oscap xccdf eval \
       --profile MAC-3_Classified \
-      --results training/results.xml \
-      --report training/rhel-stig-report.html \
-      --cpe training/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
-      training/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
+      --results /root/results.xml \
+      --report /root/rhel-stig-report.html \
+      --cpe /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
+      /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
     no_log: yes
     ignore_errors: yes
 
   - name: 'fetch report into /training/rhel-stig-report.html'
-    fetch: dest=training/rhel-stig-report.html src=training/rhel-stig-report.html flat=yes
+    fetch:
+      src: /root/rhel-stig-report.html
+      dest: /tmp/rhel-stig-report.html
+      flat: yes
+    tags:
+      - get
 
   - name: 'download Red Hat Security Response Team OVAL definitions, part 1'
     get_url: url=http://www.redhat.com/security/data/metrics/com.redhat.rhsa-all.xccdf.xml
-             dest=training/com.redhat.rhsa-all.xccdf.xml
+             dest=/tmp/com.redhat.rhsa-all.xccdf.xml
 
   - name: 'download Red Hat Security Response Team OVAL definitions, part 2'
     get_url: url=http://www.redhat.com/security/data/oval/com.redhat.rhsa-all.xml
-             dest=training/com.redhat.rhsa-all.xml
+             dest=/tmp/com.redhat.rhsa-all.xml
 
   - name: 'run the SCAP tool and create vulnerability-report.html'
     command: "oscap xccdf eval --results /root/vulnerability-results.xml \
       --report /root/vulnerability-report.html \
-      training/com.redhat.rhsa-all.xccdf.xml"
+      /tmp/com.redhat.rhsa-all.xccdf.xml"
 
-
-  - name: 'fetch report into /tmp/vulnerability-report.html'
-    fetch: dest=/tmp/vulnerability-report.html src=training/vulnerability-report.html flat=yes
+  - name: 'fetch vulnerability-report.html'
+    fetch:
+      src: /root/vulnerability-report.html
+      dest: /tmp/vulnerability-report.html
+      flat: yes
+    tags:
+      - get
