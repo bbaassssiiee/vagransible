@@ -7,6 +7,8 @@ install:
 clean:
 	vagrant destroy -f
 	rm -rf output-virtualbox-iso
+	rm -f packer/virtualbox-centos6.box
+	vagrant box remove centos6
 
 download:
 	@wget --limit-rate=10m --tries=10 --retry-connrefused --waitretry=180 --directory-prefix=${DOWNLOADS} --no-clobber \
@@ -34,7 +36,6 @@ test:
 box: packer/virtualbox-centos6.box
 	vagrant box add --name=centos6 packer/virtualbox-centos6.box
 	vagrant up --no-provision centos6
-	vagrant provision centos6
 
 all: clean box audit
 

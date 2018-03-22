@@ -1,8 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VAGRANTFILE_API_VERSION = "2"
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.inventory_path = "ansible.ini"
@@ -26,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
 
   config.vm.define :centos6, autostart: true do |centos6_config|
-    centos6_config.vm.box = "dockpack/centos6"
+    centos6_config.vm.box = "centos/6"
     centos6_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2201, auto_correct: true
 
     centos6_config.vm.provider "virtualbox" do |vb|

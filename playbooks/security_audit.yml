@@ -14,7 +14,6 @@
   - name: 'add packages for security audit'
     yum: name={{ item }} state=present
     with_items:
-     - unzip
      - git
      - openscap-utils
      - python-argparse
@@ -49,7 +48,7 @@
     no_log: yes
     ignore_errors: yes
 
-  - name: 'fetch report into /training/rhel-stig-report.html'
+  - name: 'fetch the rhel-stig-report.html'
     fetch:
       src: /root/rhel-stig-report.html
       dest: /tmp/rhel-stig-report.html
@@ -57,23 +56,23 @@
     tags:
       - get
 
-  - name: 'download Red Hat Security Response Team OVAL definitions, part 1'
-    get_url: url=http://www.redhat.com/security/data/metrics/com.redhat.rhsa-all.xccdf.xml
-             dest=/tmp/com.redhat.rhsa-all.xccdf.xml
-
-  - name: 'download Red Hat Security Response Team OVAL definitions, part 2'
-    get_url: url=http://www.redhat.com/security/data/oval/com.redhat.rhsa-all.xml
-             dest=/tmp/com.redhat.rhsa-all.xml
-
-  - name: 'run the SCAP tool and create vulnerability-report.html'
-    command: "oscap xccdf eval --results /root/vulnerability-results.xml \
-      --report /root/vulnerability-report.html \
-      /tmp/com.redhat.rhsa-all.xccdf.xml"
-
-  - name: 'fetch vulnerability-report.html'
-    fetch:
-      src: /root/vulnerability-report.html
-      dest: /tmp/vulnerability-report.html
-      flat: yes
-    tags:
-      - get
+#    - name: 'download Red Hat Security Response Team OVAL definitions, part 1'
+#      get_url: url=http://www.redhat.com/security/data/metrics/com.redhat.rhsa-all.xccdf.xml
+#               dest=/tmp/com.redhat.rhsa-all.xccdf.xml
+#
+#    - name: 'download Red Hat Security Response Team OVAL definitions, part 2'
+#      get_url: url=http://www.redhat.com/security/data/oval/com.redhat.rhsa-all.xml
+#               dest=/tmp/com.redhat.rhsa-all.xml
+#
+#    - name: 'run the SCAP tool and create vulnerability-report.html'
+#      command: "oscap xccdf eval --results /root/vulnerability-results.xml \
+#        --report /root/vulnerability-report.html \
+#        /tmp/com.redhat.rhsa-all.xccdf.xml"
+#
+#    - name: 'fetch vulnerability-report.html'
+#      fetch:
+#        src: /root/vulnerability-report.html
+#        dest: /tmp/vulnerability-report.html
+#        flat: yes
+#      tags:
+#        - get
