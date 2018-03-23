@@ -3,7 +3,9 @@
 # to install:
 # ansible-galaxy install --force -r requirements.yml
 
-- src: bbaassssiiee.commoncentos
+- src: https://github.com/bbaassssiiee/commoncentos.git
+  name: bbaassssiiee.commoncentos
 
 - src: https://github.com/MindPointGroup/RHEL6-STIG.git
+  name: RHEL6-STIG
   version: devel
