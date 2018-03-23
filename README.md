@@ -2,52 +2,41 @@
 Ansible + Vagrant = vagransible
 
 
-Vagransible is a demo presented by Bas Meijer in the Ansible-Benelux Meetup. 
+Vagransible is a demo for HUG Amsterdam by Bas Meijer.
+Check Presentation.pdf for the slides.
 
-<http://www.meetup.com/Ansible-Benelux/>
-
-NOTE: This demo was made on a Mac where I have this in ~/.ansible.cfg
-
-    [defaults]
-    private_key_file=pki/vagrant.rsa
-    host_key_checking=False
-    ansible_managed = Ansible managed: %Y-%m-%d %H:%M:%S by {uid}
+NOTE: This demo was made on a Mac.
 
 ___
-Vagrant allows users to create disposable virtual machines for their projects. These machines can be provisioned by Ansible. Combining both tools yields full control over development environments.
+Vagrant allows users to create disposable virtual machines for their projects. These machines can be provisioned by Ansible. Combining both tools yields full control over development environments. With Packer you can create base images, for Vagrant and also for the clouds.
 ___
-This project has a Makefile that wraps some longer commands and their dependencies. 
+This project has a Makefile that wraps some longer commands and their dependencies.
 
-The Vagrantfile defines several virtual machines running a variety of operating systems:
-    
-    vagrant up centos6
-    vagrant up fedora21  
-    vagrant up ubuntu14  
-    vagrant up coreos    
-    vagrant up rancheros 
+    make prepare    # install dependencies
+    make clean      # start over again
+    make up         # vagrant up, in an idempotent way
+    make harden     # run the hardening
+    make audit      # verify the hardening
+    make packer     # build the centos image with packer
+    make box        # add the packer built box for use by vagrant
+    make demo       # run the demo
 
-The provision.yml playbook defines what is done during the first run of the VM's. As an example the role geerlingguy.java installs Java as defined in the group_vars.
+The Vagrantfile defines a virtual machine with Centos 6, you can login to it:
 
-Centos 6 can be used in your first exploration of this demo.
+    vagrant ssh
+
+The provision.yml playbook defines what is done during the first run of the VM's.
+
+Centos can be used in your first exploration of this demo.
 Enter these commands with vagransible as the work directory:
 
-    'make install' # download the required roles (like <https://galaxy.ansible.com/list#/roles/439>)
+    'make prepare' # download the required roles
 
-    'make centos' # download a pre-made box with Centos6 tp run in VirtualBox.
+    'make demo'    # create a centos base images for virtualbox
 
-___
-Testing the provisioning of a fresh virtual machine for presence of Java:
-
-    make test
-    
 
 To show how security can be improved with Ansible:
 
-    make stig 
-    
-    
-To explore the management of Docker hosts:
+    'make harden'  # run the RHEL6-STIG role to create a USG compliant VM
 
-    make docker
-    
----
+    'make audit'   # check if the VM is indeed compliant
