@@ -1,4 +1,5 @@
-- name: "install.yml"
+#!/usr/bin/env ansible-playbook
+- name: "prepare: install dependencies"
   hosts: localhost
   connection: local
   gather_facts: False
