@@ -1,8 +1,10 @@
 ---
 # This playbook is run from packer during kickstart (phase 1)
 - hosts: 127.0.0.1
+  gather_facts: True
   user: vagrant
   become: yes
 
   roles:
     - bbaassssiiee.commoncentos
+

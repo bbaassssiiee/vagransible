@@ -1,9 +1,0 @@
----
-- name: 'prepare CIS on centos6 box'
-  hosts: all
-  gather_facts: True
-  become: yes
-
-  roles:
-    - ../roles/ansible-role-cis
-
