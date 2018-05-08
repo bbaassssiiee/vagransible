@@ -1,6 +1,6 @@
 # vagransible
-Ansible + Vagrant = vagransible
 
+Ansible + Vagrant = vagransible
 
 Vagransible is a demo for HUG Amsterdam by Bas Meijer.
 Check Presentation.pdf for the slides.
@@ -9,12 +9,12 @@ NOTE: This demo was made on a Mac.
 
 Centos 6 is used in this exploration of Vagrant, Packer and Ansible.
 
+## Usage
 
-**Enter these commands with vagransible as the work directory**
+### Enter these commands with vagransible as the work directory
 
     'make prepare' # download the required roles
     'make demo'    # create a centos base images for virtualbox
-
 
 ___
 
@@ -22,8 +22,9 @@ ___
 - Packer creates base images, for Vagrant and also for the clouds.
 - Ansible provisions these machines.
 - Combining these tools yields full control over development environments.
+
 ___
-**make**
+### make
 
 This project has a Makefile that wraps some longer commands and their dependencies.
 
@@ -34,7 +35,7 @@ This project has a Makefile that wraps some longer commands and their dependenci
     make harden     # run the hardening
 
 ___
-**Ansible**
+### Ansible
 
 The packer.yml playbook defines what is done during the Packer run
 
@@ -51,7 +52,6 @@ To show how security can be improved with Ansible:
 The Vagrantfile defines a virtual machine with Centos 6, you can login to it:
 
     vagrant ssh
-
 
 ___
 [@bbaassssiiee](https://twitter.com/bbaassssiiee)
