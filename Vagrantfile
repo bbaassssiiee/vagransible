@@ -4,7 +4,6 @@
 Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
-    ansible.inventory_path = "ansible.ini"
     ansible.playbook = "provision.yml"
     ansible.verbose = "vv"
    end
@@ -21,8 +20,8 @@ Vagrant.configure(2) do |config|
   config.vbguest.auto_update = false
   config.ssh.insert_key = false
   config.vm.box_check_update = false
-  # disable guest additions
-  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+  # guest additions
+  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root"
 
   config.vm.define :centos6, autostart: true do |centos6_config|
     centos6_config.vm.box = "centos/6"

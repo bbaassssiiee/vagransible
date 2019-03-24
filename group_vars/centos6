@@ -14,10 +14,6 @@ yum_packages:
    - ansible # so you can use it as a control host too
    - acpid
 
-# FOR THE RHEL_STIG security compliance
-rhel6stig_cat1: true
-rhel6stig_cat2: true
-rhel6stig_cat3: true
 rhel6stig_fullauto: true
 rhel6stig_use_dhcp: false
 # https://iase.disa.mil/stigs/Documents/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip

@@ -14,7 +14,7 @@ Centos 6 is used in this exploration of Vagrant, Packer and Ansible.
 ### Enter these commands with vagransible as the work directory
 
     'make prepare' # download the required roles
-    'make demo'    # create a centos base images for virtualbox
+    'make demo'    # create a centos6 base image for virtualbox
 
 ___
 

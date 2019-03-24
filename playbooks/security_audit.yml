@@ -12,26 +12,35 @@
 
   tasks:
     - name: 'add packages for security audit'
-      yum: name={{ item }} state=present
-      with_items:
-        - git
-        - openscap-utils
-        - python-argparse
-        - python-pip
+      yum:
+        name:
+          - git
+          - openscap-utils
+          - python-argparse
+          - python-pip
+        state: present
+        skip_broken: true
+      ignore_errors: true
 
     - name: 'add python modules for security audit'
-      pip: name={{item}}
-      with_items: "{{ requirements }}"
+      pip:
+        name: "{{ requirements }}"
+        state: present
 
     - name: 'ensure absense of STIG_SCAP results.xml file'
-      file: dest=/root/results.xml state=absent
+      file:
+        dest: /root/results.xml
+        state: absent
 
     - name: 'ensure absense of STIG_SCAP rhel-stig-report.html file'
-      file: dest=/root/rhel-stig-report.html state=absent
+      file:
+        dest: /root/rhel-stig-report.html
+        state: absent
 
     - name: 'download from http://iase.disa.mil/stigs/Documents'
-      get_url: "url=http://iase.disa.mil/stigs/Documents/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip
-               dest=/tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip"
+      command: 'curl -O https://iase.disa.mil/stigs/Documents/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip'
+      args:
+        chdir: /tmp
 
     - name: 'unzip Security Content Automation Protocol (SCAP) Content and Tools'
       command: unzip -o /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip
