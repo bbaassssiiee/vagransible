@@ -42,8 +42,8 @@ harden:
 
 .PHONY: audit      # verify the hardening
 audit:
-	ansible-playbook --private-key=pki/vagrant.rsa -l centos6 playbooks/security_audit.yml
+	ansible-playbook --private-key=pki/vagrant.rsa -v -l centos6 playbooks/security_audit.yml
 	open /tmp/rhel-stig-report.html
 
 .PHONY: demo       # run the demo
-demo: clean prepare packer box up harden audit
+demo: clean prepare packer box up audit

@@ -6,9 +6,6 @@
     - requirements:
         - tabulate
         - untangle
-        - pytest
-        - python-coveralls
-        - pytest-cov
 
   tasks:
     - name: 'add packages for security audit'
@@ -37,13 +34,13 @@
         dest: /root/rhel-stig-report.html
         state: absent
 
-    - name: 'download from http://iase.disa.mil/stigs/Documents'
-      command: 'curl -O https://iase.disa.mil/stigs/Documents/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip'
+    - name: 'download from http://dl.dod.cyber.mil'
+      command: 'curl -O https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RedHat_6_V1R24_STIG_SCAP_1-2_Benchmark.zip'
       args:
         chdir: /tmp
 
     - name: 'unzip Security Content Automation Protocol (SCAP) Content and Tools'
-      command: unzip -o /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark.zip
+      command: unzip -o /tmp/U_RedHat_6_V1R24_STIG_SCAP_1-2_Benchmark.zip
       args:
         chdir: /tmp
       tags:
@@ -51,11 +48,9 @@
 
     - name: 'run the SCAP tool and create rhel-stig-report.html'
       command: "oscap xccdf eval \
-        --profile MAC-3_Classified \
-        --results /root/results.xml \
+        --profile xccdf_mil.disa.stig_profile_MAC-2_Classified \
         --report /root/rhel-stig-report.html \
-        --cpe /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-cpe-dictionary.xml \
-        /tmp/U_RedHat_6_V1R6_STIG_SCAP_1-1_Benchmark-xccdf.xml"
+        /tmp/U_RedHat_6_V1R24_STIG_SCAP_1-2_Benchmark.xml"
       no_log: yes
       ignore_errors: yes
       tags:
