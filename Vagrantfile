@@ -17,16 +17,19 @@ Vagrant.configure(2) do |config|
     virtualbox.customize ["modifyvm", :id, "--memory", 2048]
   end
 
-  config.vbguest.auto_update = false
   config.ssh.insert_key = false
+    if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
   config.vm.box_check_update = false
   # guest additions
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root"
 
   config.vm.define :centos6, autostart: true do |centos6_config|
-    centos6_config.vm.box = "centos/6"
+    centos6_config.vm.box = "centos6"
+    centos6_config.vm.hostname = "centos6"
     centos6_config.vm.network "forwarded_port", id: 'ssh', guest: 22, host: 2201, auto_correct: true
-
+    centos6_config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
     centos6_config.vm.provider "virtualbox" do |vb|
       vb.name = "centos6"
     end
