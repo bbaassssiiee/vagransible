@@ -1,6 +1,6 @@
 #!/bin/bash -e
 ansible-galaxy install --force -p roles -r requirements.yml
 rm -f roles/RHEL6-STIG/RHEL6-STIG
-/usr/bin/env pip install -r requirements.txt
+/usr/bin/env pip install --user -r requirements.txt
 chmod 0700 ./pki
 chmod 0600 ./pki/vagrant.rsa
